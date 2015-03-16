@@ -6,12 +6,13 @@ using System.Web.Mvc;
 using log4net;
 using log4net.Repository.Hierarchy;
 using WebGrease;
+using LogManager = log4net.LogManager;
 
 namespace logEntryFilter
 {
     public class RegisterAttribute : FilterAttribute, IActionFilter, IResultFilter, IExceptionFilter
     {
-        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(RegisterAttribute));
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
           Logger.Info(filterContext.ActionDescriptor.ActionName.ToString()); 
@@ -35,8 +36,8 @@ namespace logEntryFilter
 
         public void OnException(ExceptionContext filterContext)
         {
-         Logger.ErrorException(filterContext.Exception.Message.ToString(),filterContext.Exception); 
+         Logger.Error(filterContext.Exception.Message.ToString(),filterContext.Exception); 
         }
-    {
+    
     }
 }
